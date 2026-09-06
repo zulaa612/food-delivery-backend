@@ -4,49 +4,49 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 import express from "express";
 import mongoose from "mongoose";
-
-const userSchema = new mongoose.Schema({
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-});
-
-const User = mongoose.model("User", userSchema);
+import { User } from "./schemas/user-schema";
+import connectDB from "./connectDB";
+import { request } from "http";
 
 const app = express();
-const port = 4000;
+
+const PORT = 4000;
+
 app.use(express.json());
-
-const connectDB = async () => {
-  try {
-    await mongoose.connect(
-      "mongodb+srv://zul:12345678Ab@food-delivery.reawvxy.mongodb.net/",
-    );
-    console.log("DB is connected");
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-(user) => {
-  email;
-  password;
-};
 
 connectDB();
 
 app.get("/api/health", (request, response) => {
-  response.json({ message: `api health running on ${port}` });
-});
+  response.json({ message: `API HEALTH RUNNING ON ${PORT}` });
+}); //read
 
 app.post("/signup", async (request, response) => {
-  const { email, password } = request.body;
-  const user = await User.create({ email, password });
-  console.log(user);
-  response.json({ message: "user created" });
+  try {
+    const { email, password } = request.body;
+    const user = await User.create({ email, password });
+
+    response.status(201).json({ message: "user created", user: user });
+  } catch (err) {
+    response.status(500).json({ message: "Internal Server Error", error: err });
+  }
 });
 
-app.listen(port, () => {
-  console.log(`server is running, on port ${port}`);
+app.post("/food/category", async (request, response) => {});
+
+app.post("/login", async (request, response) => {
+  try {
+    const { email, password } = request.body;
+    console.log(email, password);
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      response.status(404).json({ message: "user not found" });
+    }
+    response.status(200).json({ message: "user not found" });
+  } catch (err) {
+    response.status(500).json({ message: "Internal Server Error", error: err });
+  }
 });
 
-///mongodb+srv://zul:61221166@food-delivery.reawvxy.mongodb.net/
+app.listen(PORT, () => {
+  console.log(`Server is running, on port ${PORT}`);
+});
