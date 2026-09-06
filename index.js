@@ -4,9 +4,8 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 import express from "express";
 import mongoose from "mongoose";
-import { User } from "./schemas/user-schema";
-import connectDB from "./connectDB";
-import { request } from "http";
+import { User } from "./schemas/user-schema.js";
+import connectDB from "./connectDB.js";
 
 const app = express();
 
@@ -31,7 +30,20 @@ app.post("/signup", async (request, response) => {
   }
 });
 
-app.post("/food/category", async (request, response) => {});
+app.post("/food/category", async (request, response) => {
+  try {
+    const { foodCategory } = request.body;
+    console.log(foodCategory);
+    const category = await User.findOne({ foodCategory: foodCategory });
+
+    if (!foodCategory) {
+      response.status(404).json({ message: "Food category id required" });
+    }
+    response.status(201).json({ message: "Food category added successful" });
+  } catch (err) {
+    response.status(500).json({ message: "Internal Server Error", error: err });
+  }
+});
 
 app.post("/login", async (request, response) => {
   try {
