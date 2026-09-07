@@ -6,6 +6,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { User } from "./schemas/user-schema.js";
 import connectDB from "./connectDB.js";
+import authRouter from "./router/auth/auth.js";
 
 const app = express();
 
@@ -19,41 +20,40 @@ app.get("/api/health", (request, response) => {
   response.json({ message: `API HEALTH RUNNING ON ${PORT}` });
 }); //read
 
-app.post("/signup", async (request, response) => {
-  try {
-    const { email, password } = request.body;
-    const user = await User.create({ email, password });
-
-    response.status(201).json({ message: "user created", user: user });
-  } catch (err) {
-    response.status(500).json({ message: "Internal Server Error", error: err });
-  }
-});
+app.use("/auth", authRouter);
 
 app.post("/food/category", async (request, response) => {
   try {
     const { foodCategory } = request.body;
     console.log(foodCategory);
-    const category = await User.findOne({ foodCategory: foodCategory });
+    // const category = await User.findOne({ foodCategory: foodCategory });
 
     if (!foodCategory) {
       response.status(404).json({ message: "Food category id required" });
     }
-    response.status(201).json({ message: "Food category added successful" });
+    response.status(201).json({ message: "Food category added successfully" });
   } catch (err) {
     response.status(500).json({ message: "Internal Server Error", error: err });
   }
 });
 
-app.post("/login", async (request, response) => {
+app.get("/food/category", async (request, response) => {
   try {
-    const { email, password } = request.body;
-    console.log(email, password);
-    const user = await User.findOne({ email: email });
-    if (!user) {
-      response.status(404).json({ message: "user not found" });
+    response.json({ message: "Food category retrieved", categories: [] });
+  } catch (err) {
+    response.status(500).json({ message: "Internal Server Error", error: err });
+  }
+});
+
+app.post("/food/order", async (request, response) => {
+  try {
+    const { foodOrder } = request.body;
+    console.log(foodOrder);
+
+    if (foodOrder) {
+      response.status(404).json({ message: "Food order detail required" });
     }
-    response.status(200).json({ message: "user not found" });
+    response.status(201).json({ message: "Food order added successfully" });
   } catch (err) {
     response.status(500).json({ message: "Internal Server Error", error: err });
   }
