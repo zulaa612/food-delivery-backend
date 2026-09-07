@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import { User } from "./schemas/user-schema.js";
 import connectDB from "./connectDB.js";
 import authRouter from "./router/auth/auth.js";
+import foodCategoryRouter from "./food-category/food-category-router.js";
 
 const app = express();
 
@@ -22,28 +23,7 @@ app.get("/api/health", (request, response) => {
 
 app.use("/auth", authRouter);
 
-app.post("/food/category", async (request, response) => {
-  try {
-    const { foodCategory } = request.body;
-    console.log(foodCategory);
-    // const category = await User.findOne({ foodCategory: foodCategory });
-
-    if (!foodCategory) {
-      response.status(404).json({ message: "Food category id required" });
-    }
-    response.status(201).json({ message: "Food category added successfully" });
-  } catch (err) {
-    response.status(500).json({ message: "Internal Server Error", error: err });
-  }
-});
-
-app.get("/food/category", async (request, response) => {
-  try {
-    response.json({ message: "Food category retrieved", categories: [] });
-  } catch (err) {
-    response.status(500).json({ message: "Internal Server Error", error: err });
-  }
-});
+app.use("/food-category", foodCategoryRouter);
 
 app.post("/food/order", async (request, response) => {
   try {
@@ -53,7 +33,7 @@ app.post("/food/order", async (request, response) => {
     if (foodOrder) {
       response.status(404).json({ message: "Food order detail required" });
     }
-    response.status(201).json({ message: "Food order added successfully" });
+    response.status(200).json({ message: "Food order added successfully" });
   } catch (err) {
     response.status(500).json({ message: "Internal Server Error", error: err });
   }

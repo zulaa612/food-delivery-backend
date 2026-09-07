@@ -1,17 +1,16 @@
+import express from "express";
+import { createFoodCat } from "../food-category-controllers/create-food-category.js";
+import { getFoodCat } from "../food-category-controllers/get-food-category.js";
+import { updateFoodCat } from "../food-category-controllers/put-food-category.js";
+
 const router = express.Router();
 
-router.post("/", async (request, response) => {
-  response.status(200).json({ message: "food category post", user: user });
-}); //create
+router.post("/create", createFoodCat); //create
 
-router.delete("/", async (request, response) => {
-  response.status(200).json({ message: "food category delete", user: user });
-}); //create
+router.get("/get", getFoodCat); //read
 
-router.put("/", async (request, response) => {
-  response.status(200).json({ message: "food category update", user: user });
-}); //create
+router.put("/update", updateFoodCat); //update
 
-router.get("/", async (request, response) => {
-  response.status(200).json({ message: "food category post", user: user });
-}); //create
+//router.delete("/del", delFoodCategoryController); //delete
+
+export default router;
