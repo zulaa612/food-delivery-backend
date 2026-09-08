@@ -2,11 +2,11 @@ import { FoodCategory } from "../schemas/food-category.js";
 
 export const updateFoodCat = async (request, response) => {
   try {
-    const { id, name } = request.body;
+    const { id, categoryName } = request.body;
 
     const foodCategory = await FoodCategory.findByIdAndUpdate(
       id,
-      { categoryName: name },
+      { categoryName: categoryName },
       { new: true },
     );
 

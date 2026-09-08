@@ -1,13 +1,12 @@
 import dns from "dns";
 
-dns.setServers(["8.8.8.8", "1.1.1.1"]);
-
 import express from "express";
-import mongoose from "mongoose";
-import { User } from "./schemas/user-schema.js";
 import connectDB from "./connectDB.js";
 import authRouter from "./router/auth/auth.js";
 import foodCategoryRouter from "./food-category/food-category-router.js";
+import cors from "cors";
+
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 const app = express();
 
@@ -17,9 +16,12 @@ app.use(express.json());
 
 connectDB();
 
-app.get("/api/health", (request, response) => {
-  response.json({ message: `API HEALTH RUNNING ON ${PORT}` });
-}); //read
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  }),
+);
 
 app.use("/auth", authRouter);
 
