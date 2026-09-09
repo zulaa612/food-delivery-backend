@@ -1,4 +1,3 @@
-
 import { User } from "../../schemas/user-schema.js";
 
 export const loginController = async (request, response) => {

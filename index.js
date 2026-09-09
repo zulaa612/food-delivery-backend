@@ -4,6 +4,7 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 import express from "express";
 import connectDB from "./connectDB.js";
+import cors from "cors";
 import authRouter from "./router/auth/auth.js";
 import foodCategoryRouter from "./food-category/food-category-router.js";
 
@@ -12,6 +13,7 @@ const app = express();
 const PORT = 4000;
 
 app.use(express.json());
+app.use(cors());
 
 connectDB();
 
