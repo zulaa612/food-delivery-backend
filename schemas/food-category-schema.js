@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 
 const foodCategorySchema = new mongoose.Schema(
-  { categoryName: String },
+  {
+    categoryName: String,
+  },
   {
     timestamps: {
       createdAt: "created_at",
@@ -11,4 +13,3 @@ const foodCategorySchema = new mongoose.Schema(
 );
 
 export const FoodCategory = mongoose.model("FoodCategory", foodCategorySchema);
-
