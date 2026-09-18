@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
-const dishSchema = new mongoose.Schema(
+const categoryDishSchema = new mongoose.Schema(
   {
     dishName: { type: String, required: true },
     price: { type: Number, required: true },
+    category: { type: String, required: true },
     ingredients: String,
     image: String,
   },
@@ -15,4 +16,4 @@ const dishSchema = new mongoose.Schema(
   },
 );
 
-export const AddDish = mongoose.model("AddDish", dishSchema);
+export const CategoryDish = mongoose.model("CategoryDish", categoryDishSchema);

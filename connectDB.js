@@ -1,16 +1,13 @@
 import mongoose from "mongoose";
 
+const MONGODB_CONNECT_URL = process.env.MONGO_DB;
 const connectDB = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://zul:61226122@food-delivery.reawvxy.mongodb.net",
-    );
+    await mongoose.connect(MONGODB_CONNECT_URL);
     console.log("DB is connected");
   } catch (err) {
     console.log(err);
   }
 };
 
-
 export default connectDB;
-

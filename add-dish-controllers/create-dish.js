@@ -1,5 +1,4 @@
-
-import { AddDish } from "../schemas/dish-schema.js";
+import { CategoryDish } from "../schemas/category-dish-schema.js";
 
 export const createDish = async (request, response) => {
   try {
@@ -9,7 +8,7 @@ export const createDish = async (request, response) => {
       response.status(400).json({ message: "Fill the form" });
     }
 
-    const newDish = await AddDish.create({
+    const newDish = await CategoryDish.create({
       dishName,
       price,
       image,

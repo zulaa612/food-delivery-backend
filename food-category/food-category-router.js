@@ -6,7 +6,21 @@ import { delFoodCat } from "../food-category-controllers/del-food-category.js";
 
 const router = express.Router();
 
-router.post("/create", createFoodCat); //create
+const requireCategoryName = (request, response, next) => {
+  const { categoryName } = request.body;
+
+  if (!categoryName) {
+    return response.status(400).json({ message: "categoryName is required" });
+  } else {
+    next();
+  }
+};
+
+const requireToken = (request, response, next) => {
+  console.log(request.header);
+};
+
+router.post("/create", requireToken, requireCategoryName, createFoodCat); //create
 
 router.get("/get", getFoodCat); //read
 
