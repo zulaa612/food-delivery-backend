@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const foodCategorySchema = new mongoose.Schema(
   {
-    categoryName: String,
+    categoryName: { type: String, required: true, unique: true, trim: true },
   },
   {
     timestamps: {

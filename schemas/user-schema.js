@@ -5,8 +5,9 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  email: { type: String, required: true},
+  email: { type: String, required: true },
   password: { type: String, required: true },
+  role: { type: String, enum: ["user", "admin"], default: "user" },
 });
 
 export const User = mongoose.model("User", userSchema);

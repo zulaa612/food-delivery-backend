@@ -25,20 +25,6 @@ app.use("/food-category", foodCategoryRouter);
 
 app.use("/add-dish", addDishRouter);
 
-app.post("/food/order", async (request, response) => {
-  try {
-    const { foodOrder } = request.body;
-    console.log(foodOrder);
-
-    if (foodOrder) {
-      response.status(404).json({ message: "Food order detail required" });
-    }
-    response.status(200).json({ message: "Food order added successfully" });
-  } catch (err) {
-    response.status(500).json({ message: "Internal Server Error", error: err });
-  }
-});
-
 app.listen(PORT, () => {
   console.log(`Server is running, on port ${PORT}`);
 });

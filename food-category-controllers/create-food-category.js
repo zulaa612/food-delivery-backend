@@ -1,4 +1,3 @@
-
 import { FoodCategory } from "../schemas/food-category-schema.js";
 
 export const createFoodCat = async (request, response) => {
@@ -9,7 +8,7 @@ export const createFoodCat = async (request, response) => {
       categoryName,
     });
 
-    response.status(201).json({
+    return response.status(201).json({
       message: "Food categories created:",
       foodCategories: newFoodCat,
     });
@@ -20,6 +19,8 @@ export const createFoodCat = async (request, response) => {
         .json({ message: "Food category already exist." });
     }
     console.log(err);
-    response.status(500).json({ message: "Internal Server Error", error: err });
+    return response
+      .status(500)
+      .json({ message: "Internal Server Error", error: err });
   }
 };
