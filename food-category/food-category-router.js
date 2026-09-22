@@ -28,14 +28,8 @@ router.post(
 
 router.get("/get", getFoodCat); //read
 
-router.put("/update", requireToken, requireAdmin, createFoodCat, updateFoodCat); //update
+router.put("/update", requireToken, requireAdmin, updateFoodCat); //update
 
-router.delete(
-  "/delete",
-  requireToken,
-  requireAdmin,
-  createFoodCat,
-  delFoodCat,
-); //delete
+router.delete("/delete", requireToken, requireAdmin, delFoodCat); //delete
 
 export default router;
