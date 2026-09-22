@@ -34,7 +34,6 @@ router.delete(
   "/delete",
   requireToken,
   requireAdmin,
-
   createFoodCat,
   delFoodCat,
 ); //delete
