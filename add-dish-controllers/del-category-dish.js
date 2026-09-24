@@ -2,7 +2,7 @@ import { CategoryDish } from "../schemas/category-dish-schema.js";
 
 export const delCatDish = async (request, response) => {
   try {
-    const { id } = request.body;
+    const { id } = request.params;
 
     const delDish = await CategoryDish.findByIdAndDelete(id);
 

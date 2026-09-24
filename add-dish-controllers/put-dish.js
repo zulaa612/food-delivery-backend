@@ -2,7 +2,8 @@ import { CategoryDish } from "../schemas/category-dish-schema.js";
 
 export const updateDish = async (request, response) => {
   try {
-    const { id, dishName, price, ingredients, image } = request.body;
+    const { id } = request.params;
+    const { dishName, price, ingredients, imageUrl } = request.body;
 
     const categoryDish = await CategoryDish.findByIdAndUpdate(
       id,
@@ -19,6 +20,9 @@ export const updateDish = async (request, response) => {
         .json({ message: "Category dishes not found" });
     }
   } catch (err) {
-    response.status(500).json({ message: "Internal Server Error", error: err });
+    console.error("Update dish error:", err);
+    return response
+      .status(500)
+      .json({ message: "Internal Server Error", error: err });
   }
 };
