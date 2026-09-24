@@ -7,11 +7,8 @@ export const updateDish = async (request, response) => {
 
     const categoryDish = await CategoryDish.findByIdAndUpdate(
       id,
-      { dishName: dishName },
-      { price: price },
-      { ingredients: ingredients },
-      { image: image },
-      { new: true },
+      { dishName, price, ingredients, image: imageUrl },
+      { returnDocument: "after" },
     );
 
     if (!categoryDish) {
@@ -19,6 +16,7 @@ export const updateDish = async (request, response) => {
         .status(404)
         .json({ message: "Category dishes not found" });
     }
+    return response.status(200).json({ message: "Dish updated." });
   } catch (err) {
     console.error("Update dish error:", err);
     return response
