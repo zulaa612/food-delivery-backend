@@ -24,3 +24,4 @@ export const createFoodCat = async (request, response) => {
       .json({ message: "Internal Server Error", error: err });
   }
 };
+
