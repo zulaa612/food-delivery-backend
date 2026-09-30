@@ -33,3 +33,6 @@ router.put("/update", requireToken, requireAdmin, updateFoodCat); //update
 router.delete("/delete", requireToken, requireAdmin, delFoodCat); //delete
 
 export default router;
+
+
+

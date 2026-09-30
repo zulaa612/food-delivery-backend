@@ -1,34 +1,25 @@
-import dns from "dns";
-
-dns.setServers(["8.8.8.8", "1.1.1.1"]);
-
 import mongoose from "mongoose";
 
-const foodOrderSchema = new mongoose.Schema({
-  food: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Food",
-    required: true,
-  },
-  name: { type: String, required: true },
-  image: { type: String },
-  quantify: { type: String, required: true },
-});
+export const DELIVERY_STATES = ["Pending", "Delivered", "Cancelled"];
 
-const orderSchema = new mongoose.Schema(
+const foodOrderSchema = new mongoose.Schema(
   {
-    orderNumber: { type: Number, required: true },
-    userEmail: { type: String, required: true },
-    items: [foodOrderSchema],
-    totalAmount: { type: Number, required: true },
-    address: { type: String, required: true },
-    status: {
-      type: String,
-      enum: ["Pending", "Delivered", "Cancelled"],
-      default: "Pending",
-    },
+    customer: { type: String, required: true, trim: true },
+    items: [
+      {
+        food: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Food",
+          required: true,
+        },
+        quantity: { type: Number, default: 1, min: 1 },
+      },
+    ],
+    total: { type: Number, required: true, min: 0 },
+    address: { type: String, trim: true },
+    state: { type: String, enum: DELIVERY_STATES, default: "Pending" },
   },
-  { timestamps: true },
+  { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } },
 );
 
-export const FoodOrder = mongoose.model("FoodOrder", foodOrderSchema);
+export const foodOrder = mongoose.model("FoodOrder", foodOrderSchema);
