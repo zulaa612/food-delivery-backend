@@ -7,8 +7,9 @@ import express from "express";
 import connectDB from "./connectDB.js";
 import cors from "cors";
 import authRouter from "./router/auth/auth.js";
-import foodCategoryRouter from "./food-category/food-category-router.js";
+import foodCategoryRouter from "./router/food-category/food-category-router.js";
 import addDishRouter from "./add-dish/add-dish-router.js";
+import orderRouter from "./router/food-order/food-order.js";
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.use("/auth", authRouter);
 app.use("/food-category", foodCategoryRouter);
 
 app.use("/add-dish", addDishRouter);
+
+app.use("/food-order", orderRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running, on port ${PORT}`);
